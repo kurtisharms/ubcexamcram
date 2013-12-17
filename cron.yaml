@@ -1,0 +1,5 @@
+cron:
+- description: nightly textout
+  url: /sendtexts
+  schedule: every day 00:01
+  timezone: America/Vancouver

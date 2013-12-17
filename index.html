@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+{% autoescape true %}
+<html>
+	<head>
+		<title>UBC Exam Cram</title>
+		<link rel="stylesheet" type="text/css" href="./static/css/main.css">
+        <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.3.0/pure-min.css">
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+		<script>
+			var parts = window.location.search.substr(1).split("&");
+			var $_GET = {};
+			for (var i = 0; i < parts.length; i++) {
+			    var temp = parts[i].split("=");
+			    $_GET[decodeURIComponent(temp[0])] = decodeURIComponent(temp[1]);
+			}
+			if($_GET['message'] != null) {
+				alert(decodeURIComponent($_GET['message'].split("+").join(" ")));
+			}
+		</script>
+        <style>
+            a, a:visited { color:white; }
+        </style>
+	</head>
+	<body>
+
+        <div id="fb-root"></div>
+        <script>(function(d, s, id) {
+          var js, fjs = d.getElementsByTagName(s)[0];
+          if (d.getElementById(id)) return;
+          js = d.createElement(s); js.id = id;
+          js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=583699321697888";
+          fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+        <div id="navigationBar">
+            <h1 style="float:left;">UBC Exam Cram</h1><h2 style="float:right;display:inline-block;">For students, by students, and completely anonymous!</h2>
+        </div>
+		<div id="photoCredit">Copyright Stephen Wu Photography</div>
+		<div id="content">
+			<div class="floatingContainer" style="float:left">
+                <h1>Welcome to UBC Exam Cram!</h1>
+                <p>
+                    Does studying for finals have you stressed out? Need a break? Visit the UBC Exam Cram Facebook page to read anonymous posts from your fellow UBC students, from tips about the best places to study on campus to exam-related horror stories. Or you can submit your own post right here, anonymously!
+                </p>
+                <p>
+                    You can also enter your phone number to sign up for "Exam Cram Midnight Texts." The temptation to pull all-nighters during exam periods may be strong, but don't worry--if you sign up for the Midnight Texts service, you will receive nightly reminders encouraging you to get enough sleep that are both informative and fun.
+                </p>
+                <div class="fb-follow" data-href="http://www.facebook.com/ubcexamcram" data-colorscheme="dark" data-layout="standard" data-show-faces="true"></div>
+			</div>
+
+
+
+		    <div class="floatingContainer" style="float:right">
+		    	<h1>Submit Anonymous Post!</h1>
+                <h2>We will upload your post anonymously to our Facebook page!</h2>
+		    	<form action="/ajax" method="get" class="pure-form pure-form-stacked pure-form-aligned">
+                    <input type="hidden" name="type" value="submitpost" />
+			      	<div class="pure-control-group">
+                        <textarea name="content" rows="3" cols="60"></textarea>
+                    </div>
+                    <div class="pure-control-group">
+                        <label for="postType">Type of Post</label>
+                        <select name="postType" id="postType">
+                            <option value="tip">Tip - where/how to study and survive exams!</option>
+                            <option value="story">Story - exam stories never grow old!</option>
+                            <option value="rant">Rant - relieve some exam stress!</option>
+                        </select>
+                    </div>
+			      	<div class="pure-controls">
+                        <input type="submit" value="Submit Post!" class="pure-button pure-button-primary">
+                    </div>
+			    </form>
+		    </div>
+
+            <br style="clear:both" />
+
+            <div class="floatingContainer" style="float:left;position:relative;left:60px;">
+                <h1>Share our page!</h1>
+                <h2>Like our page on Facebook to get the latest stories, tips and tricks from your fellow students!</h2>
+			    <div class="fb-like-box" data-href="http://www.facebook.com/ubcexamcram" data-width="510" data-height="200" data-colorscheme="dark" data-show-faces="true" data-header="true" data-stream="false" data-show-border="true"></div>
+            </div>
+		    
+		    <div class="floatingContainer" style="float:right;position:relative;left:60px;top:-20px">
+		    	<h1>Signup for Exam Cram Midnight Texts!</h1>
+		    	<form action="/ajax" method="get" class="pure-forrm pure-form-aligned">
+		    		<input type="hidden" name="type" id="type" value="textsignup" />
+			      	<div class="pure-control-group">
+                        <label for="type">Phone Number</label>
+                        <input type="text" name="number" id="number" placeholder="Phone Number" />
+                    </div>
+                    <div class="pure-controls">
+			      	    <input type="submit" value="Sign Me Up!" class="pure-button pure-button-primary">
+                    </div>
+			    </form>
+                <script>
+                    function unsubscribe() {
+                        phone_number = $("#number").val();
+                        if (phone_number.length != 10 || isNaN(phone_number)) {
+                            alert('Oops! Are you sure you entered your phone number correctly, including area code? That doesn\'t look like a valid phone number!');
+                        } else {
+                            $.get( "./ajax?type=unsubscribe&number=" + phone_number, function(data) {
+                                alert("Number successfully unsubscribed!");
+                            });
+                        }
+                    }
+                </script>
+                <div style="color:white;font-size:1.0em;margin:10px;">
+                    Wish to unsubscribe? Reply "STOP" to the Midnight Text Message OR enter your number above, and <a href="javascript:unsubscribe();">click here to unsubscribe</a>
+                </div>
+		    </div>
+
+		</div>
+
+  </body>
+</html>
+{% endautoescape %}

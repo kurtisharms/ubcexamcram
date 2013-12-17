@@ -1,0 +1,36 @@
+application: ubcexamcram
+version: 1
+runtime: python27
+api_version: 1
+threadsafe: yes
+
+handlers:
+- url: /favicon\.ico
+  static_files: favicon.ico
+  upload: favicon\.ico
+  
+- url: /static
+  static_dir: static
+
+- url: /
+  script: main.app
+  
+- url: /ajax
+  script: main.app
+  
+- url: /admin
+  script: main.app
+  
+- url: /sendtexts
+  script: main.app
+  login: admin
+
+- url: /testtexts
+  script: main.app
+  login: admin
+
+libraries:
+- name: webapp2
+  version: latest
+- name: jinja2
+  version: latest

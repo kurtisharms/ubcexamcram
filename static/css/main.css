@@ -1,0 +1,77 @@
+@import url(http://fonts.googleapis.com/css?family=Lato:100,300);
+
+body {
+	background-image: url('../images/backgrounds/koerner_dramatic.jpg');
+	background-size: cover;
+	background-repeat: no-repeat;
+    font-family:'Lato',Verdana,Arial;
+}
+
+#content {
+	width: 1200px;
+	margin-left: auto;
+	background-color:none;
+	color: white;
+	/*opacity: 0.65;*/
+    opacity: 1.0;
+	margin-right: auto;
+	padding: 50px;
+	overflow:hidden;
+}
+
+#photoCredit {
+	position: fixed;
+	left:10px;
+	bottom:10px;
+	color:white;
+	font-size:0.9em;
+	background-color: black;
+	padding:5px;
+	opacity:0.65;
+}
+
+#navigationBar {
+    position:fixed;
+    left:0px;
+    top:0px;
+    width:100%;
+    height:auto;
+    overflow:hidden;
+    color:white;
+    background-color:#2D2D2D;
+    border-bottom:1px solid white;
+}
+
+#navigationBar h1 {
+    color:white;
+    font-size:2.0em;
+    margin:10px 150px;
+}
+
+#navigationBar h2 {
+    color:white;
+    font-size:1.2em;
+    margin:10px 150px;
+    line-height:2.0em;
+}
+
+.floatingContainer {
+    color:white;
+    font-size:1.0em;
+    width:500px;
+    margin:20px;
+    padding:15px;
+    background-color:#2D2D2D;
+}
+
+.floatingContainer h1 {
+    font-size:1.5em;
+}
+
+.floatingContainer h2 {
+    font-size:1.1em;
+}
+
+.floatingContainer p {
+    text-align: justify;
+}
