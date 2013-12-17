@@ -37,3 +37,6 @@ nosetests.xml
 
 # appconfig file
 appconfig.py
+
+#Ubuntu temp files
+*~

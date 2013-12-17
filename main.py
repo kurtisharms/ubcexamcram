@@ -192,7 +192,7 @@ class TextHandler(webapp2.RequestHandler):
                             self.response.write(str(rv))
                             numbers_messaged.append(number.number)
                         except:
-                            logging.info("Failed to send to number " + number.number + ". Probably because of blacklist; safe to ignore.\n" + sys.exc_info()[0])
+                            logging.info("Failed to send to number " + number.number + ". Probably because of blacklist; safe to ignore.")
 
 app = webapp2.WSGIApplication([
                                   ('/', MainHandler),
