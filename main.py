@@ -8,14 +8,25 @@ from pytz.gae import pytz
 
 from google.appengine.api import users
 from google.appengine.ext import ndb
-from google.appengine.ext import blobstore
-from google.appengine.ext.webapp import blobstore_handlers
+
 
 import jinja2
 import webapp2
 
-from twilio import twiml
 from twilio.rest import TwilioRestClient
+
+# import config file
+# this config file defines three functions that just return simple values
+#
+# def get_twilio_SID()
+# returns your twilio SID as a string
+#
+# def get_twilio_auth_token()
+# returns your twilio auth token as a string
+#
+# get_twilio_calling_number()
+# returns you twilio calling numbers as a string, in the form "1XXXYYYYYYY", where XXX is the area code
+import appconfig
 
 JINJA_ENVIRONMENT = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
@@ -147,19 +158,21 @@ class AdminHandler(webapp2.RequestHandler):
 class TestTextHandler(webapp2.RequestHandler):
     def get(self):
         # replace with your credentials from: https://www.twilio.com/user/account
-        account_sid = "AC5dc865020b105d8d6ba4ae260f894427"
-        auth_token = "fd37384d6f881f3bcbc0b1bcc7f9ab0b"
+        account_sid = appconfig.get_twilio_SID()
+        auth_token = appconfig.get_twilio_auth_token()
+        calling_number = appconfig.get_twilio_calling_number()
         client = TwilioRestClient(account_sid, auth_token)
 
-        rv = client.messages.create(to="+16049968785", from_="+16042565559", body="FACT: Seventeen hours of sustained wakefulness leads to a decrease in performance equivalent to a blood alcohol-level of 0.05%. Unless you've always wanted to try writing an exam drunk, you should get some sleep.")
+        rv = client.messages.create(to="+16049968785", from_=calling_number, body="FACT: Seventeen hours of sustained wakefulness leads to a decrease in performance equivalent to a blood alcohol-level of 0.05%. Unless you've always wanted to try writing an exam drunk, you should get some sleep.")
         self.response.write(str(rv))
 
 
 class TextHandler(webapp2.RequestHandler):
     def get(self):
         # replace with your credentials from: https://www.twilio.com/user/account
-        account_sid = "AC5dc865020b105d8d6ba4ae260f894427"
-        auth_token = "fd37384d6f881f3bcbc0b1bcc7f9ab0b"
+        account_sid = appconfig.get_twilio_SID()
+        auth_token = appconfig.get_twilio_auth_token()
+        calling_number = appconfig.get_twilio_calling_number()
         client = TwilioRestClient(account_sid, auth_token)
 
         # Set timezone to Pacific
@@ -175,17 +188,11 @@ class TextHandler(webapp2.RequestHandler):
                 for number in numbers:
                     if number.number not in numbers_messaged:
                         try:
-                            rv = client.messages.create(to=number.number, from_="+16042565559", body=message.content)
+                            rv = client.messages.create(to=number.number, from_=calling_number, body=message.content)
                             self.response.write(str(rv))
                             numbers_messaged.append(number.number)
                         except:
                             logging.info("Failed to send to number " + number.number + ". Probably because of blacklist; safe to ignore.\n" + sys.exc_info()[0])
-
-
-                            #client = TwilioRestClient(account_sid, auth_token)
-                            # replace "to" and "from_" with real numbers
-                            #rv = client.sms.messages.create(to="+16049968785",from_="+16042565559",body="Hello Monkey!")
-                            #self.response.write(str(rv))
 
 app = webapp2.WSGIApplication([
                                   ('/', MainHandler),
